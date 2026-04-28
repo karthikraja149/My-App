@@ -70,16 +70,22 @@ button {
 <body>
 
 <div class="container">
-    <h2>ðŸ’° Denomination</h2>
+    <h2>💰 Denomination</h2>
 
-    <div class="box">â‚¹500 Ã— <input type="number" id="n500" value="0" oninput="calc()"> = <div class="result" id="r500">0</div></div>
-    <div class="box">â‚¹200 Ã— <input type="number" id="n200" value="0" oninput="calc()"> = <div class="result" id="r200">0</div></div>
-    <div class="box">â‚¹100 Ã— <input type="number" id="n100" value="0" oninput="calc()"> = <div class="result" id="r100">0</div></div>
-    <div class="box">â‚¹50  Ã— <input type="number" id="n50" value="0" oninput="calc()"> = <div class="result" id="r50">0</div></div>
-    <div class="box">â‚¹20  Ã— <input type="number" id="n20" value="0" oninput="calc()"> = <div class="result" id="r20">0</div></div>
-    <div class="box">â‚¹10  Ã— <input type="number" id="n10" value="0" oninput="calc()"> = <div class="result" id="r10">0</div></div>
+    <!-- Notes -->
+    <div class="box">₹500 × <input type="number" id="n500" value="0" oninput="calc()"> = <div class="result" id="r500">0</div></div>
+    <div class="box">₹200 × <input type="number" id="n200" value="0" oninput="calc()"> = <div class="result" id="r200">0</div></div>
+    <div class="box">₹100 × <input type="number" id="n100" value="0" oninput="calc()"> = <div class="result" id="r100">0</div></div>
+    <div class="box">₹50 × <input type="number" id="n50" value="0" oninput="calc()"> = <div class="result" id="r50">0</div></div>
+    <div class="box">₹20 × <input type="number" id="n20" value="0" oninput="calc()"> = <div class="result" id="r20">0</div></div>
+    <div class="box">₹10 × <input type="number" id="n10" value="0" oninput="calc()"> = <div class="result" id="r10">0</div></div>
 
-    <div class="total">TOTAL = â‚¹<span id="total">0</span></div>
+    <!-- Coins -->
+    <div class="box">₹5 × <input type="number" id="n5" value="0" oninput="calc()"> = <div class="result" id="r5">0</div></div>
+    <div class="box">₹2 × <input type="number" id="n2" value="0" oninput="calc()"> = <div class="result" id="r2">0</div></div>
+    <div class="box">₹1 × <input type="number" id="n1" value="0" oninput="calc()"> = <div class="result" id="r1">0</div></div>
+
+    <div class="total">TOTAL = ₹<span id="total">0</span></div>
 
     <input class="full" type="number" id="cod" placeholder="COD Amount" oninput="calc()">
 
@@ -90,12 +96,12 @@ button {
 
     <div class="total" id="date"></div>
 
-    <button class="share" onclick="share()">ðŸ“¤ Share WhatsApp</button>
+    <button class="share" onclick="share()">📤 Share WhatsApp</button>
 </div>
 
 <script>
 function calc() {
-    let values = [500,200,100,50,20,10];
+    let values = [500,200,100,50,20,10,5,2,1];
     let total = 0;
 
     values.forEach(v => {
@@ -115,13 +121,13 @@ function calc() {
     if(cod == 0){
         diffBox.innerText = "";
     } else if(diff > 0){
-        diffBox.innerHTML = "Extra Amount: â‚¹" + diff;
+        diffBox.innerHTML = "Extra Amount: ₹" + diff;
         diffBox.className = "diff extra";
     } else if(diff < 0){
-        diffBox.innerHTML = "Short Amount: â‚¹" + Math.abs(diff);
+        diffBox.innerHTML = "Short Amount: ₹" + Math.abs(diff);
         diffBox.className = "diff less";
     } else {
-        diffBox.innerHTML = "Perfect Match âœ…";
+        diffBox.innerHTML = "Perfect Match ✅";
         diffBox.className = "diff";
     }
 }
@@ -135,29 +141,29 @@ function setDate(){
 function share() {
     calc();
 
-    let txt =
-`ðŸ’° DENOMINATION ðŸ’°
+    let txt = `💰 DENOMINATION 💰
 
-â‚¹500 Ã— ${n500.value} = ${n500.value*500}
-â‚¹200 Ã— ${n200.value} = ${n200.value*200}
-â‚¹100 Ã— ${n100.value} = ${n100.value*100}
-â‚¹50  Ã— ${n50.value} = ${n50.value*50}
-â‚¹20  Ã— ${n20.value} = ${n20.value*20}
-â‚¹10  Ã— ${n10.value} = ${n10.value*10}
+₹500 × ${n500.value}
+₹200 × ${n200.value}
+₹100 × ${n100.value}
+₹50 × ${n50.value}
+₹20 × ${n20.value}
+₹10 × ${n10.value}
+₹5 × ${n5.value}
+₹2 × ${n2.value}
+₹1 × ${n1.value}
 
---------------------
-TOTAL = â‚¹${total.innerText}
-COD = â‚¹${cod.value}
---------------------
+TOTAL = ₹${total.innerText}
+COD = ₹${cod.value}
 
 ${diff.innerText}
 
 Name : ${name.value}
-EDD Pending : ${edd.value}
-Date : ${document.getElementById("date").innerText.replace("Date : ","")}
+EDD : ${edd.value}
+${date.innerText}
 `;
 
-    window.open("https://wa.me/?text=" + encodeURIChttp://localhost:2435/storage/emulated/0/CBA+UPDATE.HTMLomponent(txt));
+    window.open("https://wa.me/?text=" + encodeURIComponent(txt));
 }
 
 setDate();
