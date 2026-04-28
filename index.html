@@ -1,9 +1,167 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My App</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Denomination Pro</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #eef2f7;
+    margin: 0;
+    padding: 15px;
+}
+.container {
+    max-width: 420px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+h2 { text-align: center; }
+
+.box {
+    display: flex;
+    justify-content: space-between;
+    background: #f7f9fc;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+.box input {
+    width: 60px;
+    text-align: center;
+}
+.result { width: 80px; text-align: right; font-weight: bold; }
+
+.total, .diff {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+input.full {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.share { background: #25D366; color: white; }
+
+.extra { color: green; }
+.less { color: red; }
+</style>
 </head>
+
 <body>
-  <h1>Hello World 🚀</h1>
+
+<div class="container">
+    <h2>ðŸ’° Denomination</h2>
+
+    <div class="box">â‚¹500 Ã— <input type="number" id="n500" value="0" oninput="calc()"> = <div class="result" id="r500">0</div></div>
+    <div class="box">â‚¹200 Ã— <input type="number" id="n200" value="0" oninput="calc()"> = <div class="result" id="r200">0</div></div>
+    <div class="box">â‚¹100 Ã— <input type="number" id="n100" value="0" oninput="calc()"> = <div class="result" id="r100">0</div></div>
+    <div class="box">â‚¹50  Ã— <input type="number" id="n50" value="0" oninput="calc()"> = <div class="result" id="r50">0</div></div>
+    <div class="box">â‚¹20  Ã— <input type="number" id="n20" value="0" oninput="calc()"> = <div class="result" id="r20">0</div></div>
+    <div class="box">â‚¹10  Ã— <input type="number" id="n10" value="0" oninput="calc()"> = <div class="result" id="r10">0</div></div>
+
+    <div class="total">TOTAL = â‚¹<span id="total">0</span></div>
+
+    <input class="full" type="number" id="cod" placeholder="COD Amount" oninput="calc()">
+
+    <div class="diff" id="diff"></div>
+
+    <input class="full" type="text" id="name" placeholder="Name">
+    <input class="full" type="number" id="edd" placeholder="EDD Pending">
+
+    <div class="total" id="date"></div>
+
+    <button class="share" onclick="share()">ðŸ“¤ Share WhatsApp</button>
+</div>
+
+<script>
+function calc() {
+    let values = [500,200,100,50,20,10];
+    let total = 0;
+
+    values.forEach(v => {
+        let qty = document.getElementById("n"+v).value || 0;
+        let amt = qty * v;
+        document.getElementById("r"+v).innerText = amt;
+        total += amt;
+    });
+
+    document.getElementById("total").innerText = total;
+
+    let cod = document.getElementById("cod").value || 0;
+    let diff = total - cod;
+
+    let diffBox = document.getElementById("diff");
+
+    if(cod == 0){
+        diffBox.innerText = "";
+    } else if(diff > 0){
+        diffBox.innerHTML = "Extra Amount: â‚¹" + diff;
+        diffBox.className = "diff extra";
+    } else if(diff < 0){
+        diffBox.innerHTML = "Short Amount: â‚¹" + Math.abs(diff);
+        diffBox.className = "diff less";
+    } else {
+        diffBox.innerHTML = "Perfect Match âœ…";
+        diffBox.className = "diff";
+    }
+}
+
+function setDate(){
+    let d = new Date();
+    document.getElementById("date").innerText =
+        "Date : " + d.toLocaleDateString();
+}
+
+function share() {
+    calc();
+
+    let txt =
+`ðŸ’° DENOMINATION ðŸ’°
+
+â‚¹500 Ã— ${n500.value} = ${n500.value*500}
+â‚¹200 Ã— ${n200.value} = ${n200.value*200}
+â‚¹100 Ã— ${n100.value} = ${n100.value*100}
+â‚¹50  Ã— ${n50.value} = ${n50.value*50}
+â‚¹20  Ã— ${n20.value} = ${n20.value*20}
+â‚¹10  Ã— ${n10.value} = ${n10.value*10}
+
+--------------------
+TOTAL = â‚¹${total.innerText}
+COD = â‚¹${cod.value}
+--------------------
+
+${diff.innerText}
+
+Name : ${name.value}
+EDD Pending : ${edd.value}
+Date : ${document.getElementById("date").innerText.replace("Date : ","")}
+`;
+
+    window.open("https://wa.me/?text=" + encodeURIChttp://localhost:2435/storage/emulated/0/CBA+UPDATE.HTMLomponent(txt));
+}
+
+setDate();
+</script>
+
 </body>
 </html>
